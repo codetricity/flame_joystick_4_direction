@@ -8,10 +8,10 @@ class Player extends RectangleComponent
     with HasGameRef<MyGame>, CollisionCallbacks {
   Player()
       : super(
-          size: Vector2.all(30),
-          paint: Paint()..color = Colors.green,
-          position: Vector2.all(100),
-        ) {
+            size: Vector2.all(30),
+            paint: Paint()..color = Colors.green,
+            position: Vector2.all(100),
+            priority: 2) {
     debugMode = true;
   }
 
