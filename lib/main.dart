@@ -12,25 +12,48 @@ void main() {
   runApp(GameWidget(game: MyGame()));
 }
 
+enum MapType { basic, tile, charlie }
+
 class MyGame extends FlameGame with HasDraggables, HasCollisionDetection {
   final player = Player();
 
   late final JoystickComponent joystick;
   final double playerSpeed = 300;
+  final MapType mapType = MapType.charlie;
+  late TiledComponent gameMap;
+  late List<TiledObject> mapObstacles;
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    var gameMap = await TiledComponent.load('map.tmx', Vector2.all(16));
-    add(gameMap);
 
-    List<TiledObject> mapObstacles =
-        gameMap.tileMap.getLayer<ObjectGroup>('obstacle_object')!.objects;
+    switch (mapType) {
+      case MapType.basic:
+        gameMap = await TiledComponent.load('map.tmx', Vector2.all(16));
+        mapObstacles =
+            gameMap.tileMap.getLayer<ObjectGroup>('obstacle_object')!.objects;
+        for (var obstacle in mapObstacles) {
+          add(Obstacle(
+              position: Vector2(obstacle.x, obstacle.y),
+              size: Vector2(obstacle.width, obstacle.height)));
+        }
+        add(gameMap);
 
-    for (var obstacle in mapObstacles) {
-      add(Obstacle(
-          position: Vector2(obstacle.x, obstacle.y),
-          size: Vector2(obstacle.width, obstacle.height)));
+        break;
+      case MapType.charlie:
+        gameMap = await TiledComponent.load('level_1.tmx', Vector2.all(16));
+        mapObstacles =
+            gameMap.tileMap.getLayer<ObjectGroup>('Obstacles')!.objects;
+        for (var obstacle in mapObstacles) {
+          add(Obstacle(
+              position: Vector2(obstacle.x, obstacle.y),
+              size: Vector2(obstacle.width, obstacle.height)));
+        }
+        add(gameMap);
+
+        break;
+      default:
+        break;
     }
 
     joystick = JoystickComponent(

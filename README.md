@@ -7,3 +7,5 @@ Simple 4 movement collision dectection.
 With map made using tiled map editor
 
 ![screenshot2](docs/assets/screenshot2.gif)
+
+![screenshot3](docs/assets/screenshot3.gif)
