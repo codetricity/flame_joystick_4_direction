@@ -21,7 +21,7 @@ class Player extends RectangleComponent
 
   @override
   void update(double dt) {
-    var velocity = gameRef.joystick.relativeDelta * 100 * dt;
+    var velocity = gameRef.joystick.relativeDelta * gameRef.playerSpeed * dt;
     var joystickDirection = gameRef.joystick.direction;
     super.update(dt);
 
@@ -54,15 +54,10 @@ class Player extends RectangleComponent
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Obstacle) {
-      // if (gameRef.joystick.direction == JoystickDirection.up ||
-      //     gameRef.joystick.direction == JoystickDirection.down ||
-      //     gameRef.joystick.direction == JoystickDirection.left ||
-      //     gameRef.joystick.direction == JoystickDirection.right) {
       if (!collided) {
         collided = true;
         collisionDirection = gameRef.joystick.direction;
       }
-      // }
     }
     super.onCollision(intersectionPoints, other);
   }
