@@ -23,3 +23,7 @@ With map made using tiled map editor
 * Ubuntu 22.04
 
 Developed in June 2022.
+
+## Additional Examples of Joystick
+
+* https://github.com/codetricity/charlie_chicken
